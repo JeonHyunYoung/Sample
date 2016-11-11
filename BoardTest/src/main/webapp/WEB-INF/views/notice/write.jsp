@@ -16,7 +16,7 @@
 <div class="container">
 	<div class="row">
 	<div class="col-md-2"></div>
-		<div class="col-md-8"align="center">
+		<div class="col-md-8" align="center">
 			<form>
 				<table class="table">
 					<tr>
@@ -38,11 +38,8 @@
 						<td><input type="file" style="width:100%"></td>
 					</tr>
 				</table>
-				
 				<button>전송</button>
-
-			</form>
-					
+			</form>	
 		</div>
 	</div>
 </div>

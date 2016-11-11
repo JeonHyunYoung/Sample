@@ -21,9 +21,6 @@
 
 				<table class="table">
 					<tr>
-						<td>글번호 : ${boardVO.bno }</td>
-					</tr>
-					<tr>
 						<td>제목</td>
 					</tr>
 					<tr>
@@ -44,8 +41,8 @@
 				</table>
 				
 				<a href="#" class="btn">목록</a>
-				&nbsp;&nbsp;<button id="update" class="btn">수정</button>
-				&nbsp;&nbsp;<button id="delete" class="btn">삭제</button>
+				&nbsp;&nbsp;<button class="btn">수정</button>
+				&nbsp;&nbsp;<button class="btn">삭제</button>
 
 				<br/><br/>
 				<div>
@@ -54,11 +51,18 @@
 					<button>댓글등록</button>
 				</div>
 				<br/><br/>
-				<div id="replies"><!-- 댓글 입력시 생성되는 div -->
-					
+				<div id="replies">
+					<div style='border: 1px solid black'>
+						<p>jeon</p><br/>
+						<textarea style='width:100%' readonly='readonly'>가나다라마바사</textarea>
+					</div>
+					<div style='border: 1px solid black'>
+						<p>kang</p><br/>
+						<textarea style='width:100%' readonly='readonly'>ABCDE12345</textarea>
+					</div>
 				</div>
-				<div id="replymore">
-					<button>더보기(2개씩)</button>
+				<div>
+					<button class="btn btn-default btn-lg">더보기(2개씩)</button>
 				</div>
 		</div>
 	</div>

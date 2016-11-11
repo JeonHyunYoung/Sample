@@ -13,27 +13,25 @@
   <div class="row">
   	<div class="col-md-4"></div>
   	<div class="col-md-4">
-  		<!-- 
+  		 
 	  	<form>
 		  <div class="form-group">
-		    <label for="InputId">아이디</label>
-		    <input type="email" class="form-control" id="InputId" placeholder="아이디을 입력하세요">
+		    <label for="id">아이디</label>
+		    <input type="text" class="form-control" id="id" placeholder="아이디을 입력하세요">
 		  </div>
 		  <div class="form-group">
-		    <label for="InputPassword1">암호</label>
-		    <input type="password" class="form-control" id="InputPassword1" placeholder="비밀번호를 입력하세요">
+		    <label for="password">암호</label>
+		    <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
 		  </div>
 		  <button type="submit" class="btn btn-default">제출</button>
 		</form>
-		 -->
-		 <p><b>OOO</b>님 환영합니다.</p>
+		 <!--
+		 <p><b>OOO</b>님 환영합니다.</p><br><br>
 		 <a href="#">공지사항</a>&nbsp;&nbsp;&nbsp;<a href="#">Q & A</a>
-		 
+		 -->
   	</div>
   </div>
 </div>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </body>

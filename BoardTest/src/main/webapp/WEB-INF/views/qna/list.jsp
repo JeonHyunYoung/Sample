@@ -39,8 +39,15 @@
 					<td>1</td>
 					<td><a href="#">1234567</a></td>
 					<td>jeon</td>
-					<td>12:11</td>
+					<td>2016-11-11</td>
 					<td>5</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>&nbsp;&nbsp;&nbsp;<a href="#">1234567에 대한 답변입니다</a></td>
+					<td>kang</td>
+					<td>09:00</td>
+					<td>0</td>
 				</tr>
 				<tr>
 					<td>3</td>
@@ -50,7 +57,7 @@
 					<td>0</td>
 				</tr>
 				<tr>
-					<td>3</td>
+					<td>4</td>
 					<td><a href="#">가나다라마바사</a>&nbsp;[2]</td>
 					<td>yoon</td>
 					<td>2016-11-05</td>

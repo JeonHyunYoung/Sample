@@ -35,10 +35,9 @@
 						<td>첨부파일</td>
 					</tr>
 					<tr>
-						<td>abcde.jpg<input type="file" style="width:100%"></td>
+						<td>abcde.jpg<span class="glyphicon glyphicon-remove" aria-hidden="true"></span><input type="file" style="width:100%"></td>
 					</tr>
 				</table>
-				
 				<button class="btn">완료</button>&nbsp;&nbsp;<a href="#" class="btn">취소</a>
 			</form>
 		</div>
