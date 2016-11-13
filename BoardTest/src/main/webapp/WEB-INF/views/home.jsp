@@ -14,10 +14,8 @@
   	<div class="col-md-4"></div>
   	<div class="col-md-4">
   		<form>
-	  		 <div id="radio">
-                   <input type="radio" id="radio1" name="option" checked="checked"><label for="radio1">일반회원</label>
-                   <input type="radio" id="radio2" name="option"><label for="radio2">관리자</label>
-              </div>
+              <input type="radio" id="radio1" name="option" checked="checked"><label for="radio1">일반회원</label>
+              <input type="radio" id="radio2" name="option"><label for="radio2">관리자</label>
 
 			  <div class="form-group">
 			    <label for="id">아이디</label>
