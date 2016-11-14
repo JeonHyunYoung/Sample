@@ -36,7 +36,7 @@
 						<td>첨부파일</td>
 					</tr>
 					<tr>
-						<td>abcde.jpg<input type="file" style="width:100%"></td>
+						<td><a href="#">abcd.jpg</a></td>
 					</tr>
 				</table>
 				

@@ -35,10 +35,12 @@
 						<td>첨부파일</td>
 					</tr>
 					<tr>
-						<td><input type="file" style="width:100%"></td>
+						<td>
+							<input type="button" value="파일찾기"> 
+						</td>
 					</tr>
 				</table>
-				<button>전송</button>
+				<button>전송</button>&nbsp;<button>취소</button>
 			</form>	
 		</div>
 	</div>
