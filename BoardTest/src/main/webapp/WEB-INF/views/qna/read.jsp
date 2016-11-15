@@ -18,7 +18,6 @@
 	<div class="row">
 	<div class="col-md-2"></div>
 		<div class="col-md-8"align="center">
-
 				<table class="table">
 					<tr>
 						<td>자바를 마스터하자(과정번호 : 102)</td>

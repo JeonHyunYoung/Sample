@@ -37,13 +37,13 @@
 						<td>제목</td>
 					</tr>
 					<tr>
-						<td><input type="text" style="width:100%"></td>
+						<td><input type="text" style="width:100%" value="입력된 게시글의 제목의 들어옵니다."></td>
 					</tr>
 					<tr>
 						<td>내용</td>
 					</tr>
 					<tr>
-						<td><textarea rows="5" style="width:100%"></textarea></td>
+						<td><textarea rows="5" style="width:100%">입력된 게시글의 내용이 들어옵니다.</textarea></td>
 					</tr>
 					
 				</table>
