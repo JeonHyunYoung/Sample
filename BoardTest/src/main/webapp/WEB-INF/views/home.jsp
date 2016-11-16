@@ -13,24 +13,33 @@
   <div class="row">
   	<div class="col-md-4"></div>
   	<div class="col-md-4">
-  		<form>
-              <input type="radio" id="radio1" name="option" checked="checked"><label for="radio1">일반회원</label>
-              <input type="radio" id="radio2" name="option"><label for="radio2">관리자</label>
+  		<c:if test="${msg!=null }">
+  			<script>
+  				alert('${msg}');
+  			</script>
+  		</c:if>
+  		<c:if test="${id==null || id=='' }">
+  			<form action="/login" method="post">
+              <input type="radio" id="radio1" name="auth" checked="checked" value="2"><label for="radio1">일반회원</label>
+              <input type="radio" id="radio2" name="auth" value="1"><label for="radio2">관리자</label>
 
 			  <div class="form-group">
 			    <label for="id">아이디</label>
-			    <input type="text" class="form-control" id="id" placeholder="아이디을 입력하세요">
+			    <input type="text" class="form-control" id="id" name="id" placeholder="아이디을 입력하세요">
 			  </div>
 			  <div class="form-group">
 			    <label for="password">암호</label>
-			    <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
+			    <input type="password" class="form-control" id="password" name="pw" placeholder="비밀번호를 입력하세요">
 			  </div>
 			  <button type="submit" class="btn btn-default">LOGIN</button>
-		</form>
-		 <!--
-		 <p><b>OOO</b>님 환영합니다.</p><br><br>
-		 <a href="#">공지사항</a>&nbsp;&nbsp;&nbsp;<a href="#">Q & A</a>
-		 -->
+			</form>
+  		</c:if>
+  		
+		<c:if test="${id!=null }">
+			<p><b>${id }</b>님 환영합니다.</p><br><br>
+			<a href="/notice/list">공지사항</a>&nbsp;&nbsp;&nbsp;<a href="#">Q & A</a>
+		</c:if>
+		
   	</div>
   </div>
 </div>

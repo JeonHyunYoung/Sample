@@ -35,23 +35,32 @@
 				<tr>
 					<th style="width: 10%">글번호</th><th style="width: 50%">제목</th><th style="width: 15%">작성자</th><th style="width: 15%">등록일</th><th style="width: 10%">조회수</th>
 				</tr>
+				<c:forEach var="notice" items="${list }">
+					<tr>
+						<td>${notice.num }</td>
+						<td><a href="#">${notice.title }</a></td>
+						<td>${notice.writer }</td>
+						<td>${notice.regdate }</td>
+						<td>${notice.viewcnt }</td>
+					</tr>
+				</c:forEach>
 				<tr>
 					<td>1</td>
-					<td><a href="#">1234567</a></td>
-					<td>jeon</td>
-					<td>12:11</td>
-					<td>5</td>
+					<td><a href="#">ABCDEFG</a></td>
+					<td>kang</td>
+					<td>2016-11-10</td>
+					<td>0</td>
 				</tr>
 				<tr>
-					<td>3</td>
-					<td><a href="#">ABCDEFG</a>&nbsp;[5]</td>
+					<td>2</td>
+					<td><a href="#">ABCDEFG</a></td>
 					<td>kang</td>
 					<td>2016-11-10</td>
 					<td>0</td>
 				</tr>
 				<tr>
 					<td>3</td>
-					<td><a href="#">가나다라마바사</a>&nbsp;[2]</td>
+					<td><a href="#">가나다라마바사</a></td>
 					<td>yoon</td>
 					<td>2016-11-05</td>
 					<td>1</td>
@@ -68,7 +77,7 @@
 					<li><a href="#">다음</a></li>
 				</ul>
 			</div>
-			<a href="#" class="btn">글쓰기</a>
+			<a href="/notice/write" class="btn">글쓰기</a>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-package com.raonis.board;
+package com.raonis.board.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,39 +21,26 @@ import com.raonis.board.service.UserService;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class NoticeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
 	
 	@Autowired
 	UserService service;
-	
-	@Autowired
-	UserDaoImpl udi; 
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		return "home";
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(Model model, UserVO vo, HttpSession session, RedirectAttributes ra) {
-		
-		UserVO user = service.login(vo);
 
-		if(user!=null){
-			session.setAttribute("id", user.getId());
-			session.setAttribute("pw", user.getPw());
-			session.setAttribute("auth", user.getAuth());
-		}
-		else{
-			ra.addFlashAttribute("msg", "로그인 실패");
-		}
-	
-		return "redirect:/";
+	@RequestMapping(value = "/notice/list", method = RequestMethod.GET)
+	public void list(Model model) {
+		
 	}
 	
+	@RequestMapping(value = "/notice/write", method = RequestMethod.GET)
+	public void write(Model model) {
+		
+	}
 	
-	
+	@RequestMapping(value = "/notice/write", method = RequestMethod.POST)
+	public void dowrite(Model model) {
+		
+	}
 }
