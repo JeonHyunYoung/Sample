@@ -40,13 +40,13 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public List<NoticeVO> list() {
-		return dao.list();
+	public int count(Search search) {
+		return dao.count(search);
 	}
 
 	@Override
-	public int count(Search search) {
-		return dao.count(search);
+	public List<NoticeVO> list(int start, int recordPerPage, Search search) {
+		return dao.list(start, recordPerPage, search);
 	}
 	
 }

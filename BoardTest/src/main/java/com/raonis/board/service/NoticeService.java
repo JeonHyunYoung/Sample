@@ -11,5 +11,5 @@ public interface NoticeService {
 	public int count(Search search);
 	public NoticeVO read(int num, String use);
 	public void delete(int num);
-	public List<NoticeVO> list();
+	public List<NoticeVO> list(int start, int recordPerPage, Search search);
 }

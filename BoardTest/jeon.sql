@@ -1,6 +1,3 @@
-drop table tbl_user;
-drop table tbl_notice;
-
 create sequence seq_user;
 create sequence seq_notice;
 
@@ -29,6 +26,12 @@ alter table tbl_notice add CONSTRAINT pk_notice primary key(num);
 insert into TBL_USER(num, id, pw, auth) values(seq_user.nextVal, 'jeon', '1111', '1');
 
 select * from tbl_user;
-select * from tbl_notice;
-
+SELECT * FROM (SELECT ROWNUM RNUM, TBL_NOTICE.* FROM TBL_NOTICE order by num desc) A WHERE A.RNUM BETWEEN 1 AND 10+5;
 commit;
+
+insert into tbl_notice(num, title, content, writer) values(seq_notice.nextVal, 'test', 'testtest', 'jeon');
+
+insert into tbl_notice(num, title, content, writer)  select seq_notice.nextVal, title, content, writer from tbl_notice;
+
+select count(*) from tbl_notice where num>0 and title like '%test%';
+

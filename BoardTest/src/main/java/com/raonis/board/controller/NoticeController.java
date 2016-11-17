@@ -39,7 +39,7 @@ public class NoticeController {
 		paging.setNowPage(nowPage);
 		paging.setNowBlock(nowBlock);
 		paging.setSearch(search);
-		model.addAttribute("list", service.list((paging.getNowPage()-1)*paging.getRecordPerPage(), paging.getRecordPerPage(), search));
+		model.addAttribute("list", service.list((paging.getNowPage()-1)*paging.getRecordPerPage(), paging.getNowPage()*paging.getRecordPerPage(), search));
 		model.addAttribute("paging", paging);
 	}
 	
@@ -52,12 +52,12 @@ public class NoticeController {
 	public String dowrite(Model model, MultipartFile filename, String title, String content, HttpServletRequest req, HttpSession session) throws IOException {
 		NoticeVO vo = new NoticeVO();
 		
-		String savedName=FileUpload.uploadFile(filename.getOriginalFilename(), filename.getBytes(), req.getServletContext().getRealPath("resources/upload"));
 		vo.setTitle(title);
 		vo.setContent(content);
 		vo.setWriter((String)session.getAttribute("id"));
+		String savedName=FileUpload.uploadFile(filename.getOriginalFilename(), filename.getBytes(), req.getServletContext().getRealPath("resources/upload"));
 		vo.setFilename(savedName);
-		
+
 		service.write(vo);
 		
 		return "redirect:/notice/list";
@@ -67,15 +67,17 @@ public class NoticeController {
 	public void read(Model model, int num){
 		NoticeVO vo = service.read(num, "read");
 		//DB경로에서 가져온 값은 경로와 UUID 고유값이 포함되어 있으므로 파일 이름만 가져오기 위한 부분
-		vo.setFilename(vo.getFilename().substring(vo.getFilename().lastIndexOf("_")+1));
+		if(vo.getFilename()!=null){
+			vo.setFilename(vo.getFilename().substring(vo.getFilename().lastIndexOf("_")+1));
+		}
 		model.addAttribute("notice", vo);
 	}
 	
 	
 	@RequestMapping(value = "/notice/delete", method = RequestMethod.POST)
-	public String delete(Model model, int num){
+	public String delete(Model model, int num, RedirectAttributes ra){
 		service.delete(num);
-		model.addAttribute("msg", "삭제 완료");
+		ra.addFlashAttribute("msg", "삭제 완료");
 		return "redirect:/notice/list";
 	}
 	
@@ -99,8 +101,7 @@ public class NoticeController {
 			vo.setFilename(filename.getOriginalFilename());
 		}
 		
-		service.update(vo);
-		
+		service.update(vo);		
 		ra.addFlashAttribute("msg", "수정 완료");
 		
 		return "redirect:/notice/read?num="+num;

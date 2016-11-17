@@ -12,5 +12,5 @@ public interface NoticeDao {
 	public int count(Search search);
 	public void addViewCount(int num);
 	public void delete(int num);
-	public List<NoticeVO> list();
+	public List<NoticeVO> list(int start, int recordPerPage, Search search);
 }

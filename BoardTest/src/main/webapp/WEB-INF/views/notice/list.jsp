@@ -23,15 +23,15 @@
 		<div class="col-md-2"></div>
 		<div class="col-md-8" align="center">
 			<div class="pull-left">
-				<form>
+				<form action="/notice/list" method="get">
 					<select id="keyword" name="keyword">
-						<option>제목</option>
-						<option>내용</option>
-						<option>작성자</option>
-						<option>제목+내용</option>
+						<option <c:out value="${search.keyword=='t'? 'selected' : '' }"/> value="t">제목</option>
+						<option <c:out value="${search.keyword=='c'? 'selected' : '' }"/> value="c">내용</option>
+						<option <c:out value="${search.keyword=='w'? 'selected' : '' }"/> value="w">작성자</option>
+						<option <c:out value="${search.keyword=='tc'? 'selected' : '' }"/> value="tc">제목+내용</option>
 					</select>
 					
-					<input type="text"/>
+					<input type="text" id="keyfield" name="keyfield" value="${search.keyfield }"/>
 					<input type="submit" value="검색"/>
 				</form>
 			</div>
@@ -52,13 +52,17 @@
 			</table>
 			<div>
 				<ul class="pagination">
-					<li><a href="#">이전</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">다음</a></li>
+					<c:if test="${paging.nowBlock>0 }">
+						<li><a href="/notice/list?nowPage=${paging.start-1 }&nowBlock=${paging.nowBlock-1}&keyword=${search.keyword}&keyfield=${search.keyfield}">이전</a></li>
+					</c:if>
+					<c:forEach begin="${paging.start }" end="${paging.end }" var="idx">
+						<li <c:out value="${paging.nowPage==idx? 'class = active':''}"/>>
+							<a href="/notice/list?nowPage=${idx }&nowBlock=${paging.nowBlock}&keyword=${search.keyword}&keyfield=${search.keyfield}">${idx }</a>
+						</li>
+					</c:forEach>
+					<c:if test="${paging.nowBlock<paging.totalBlock }">
+						<li><a href="/notice/list?nowPage=${paging.end+1 }&nowBlock=${paging.nowBlock+1}&keyword=${search.keyword}&keyfield=${search.keyfield}">다음</a></li>
+					</c:if>
 				</ul>
 			</div>
 			<a href="/notice/write" class="btn btn-primary" role="button">글쓰기</a>

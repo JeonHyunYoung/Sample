@@ -1,6 +1,8 @@
 package com.raonis.board.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -52,13 +54,19 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public List<NoticeVO> list() {
-		return sqlSession.selectList(NAMESPACE+".list");
+	public int count(Search search) {
+		return sqlSession.selectOne(NAMESPACE+".count", search);
 	}
 
 	@Override
-	public int count(Search search) {
-		return (int)sqlSession.selectList(NAMESPACE+".count", search);
+	public List<NoticeVO> list(int start, int recordPerPage, Search search) {
+		
+		Map<String , Object> map = new HashMap<>();
+		map.put("start", start);
+		map.put("recordPerPage", recordPerPage);
+		map.put("search", search);
+		
+		return sqlSession.selectList(NAMESPACE+".list", map);
 	}
 	
 }

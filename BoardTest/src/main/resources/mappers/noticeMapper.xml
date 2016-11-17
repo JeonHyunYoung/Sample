@@ -7,29 +7,41 @@
 	<sql id="search">
 		<if test="keyfield!=null or keyfield!=''">
 			<if test="keyword=='t'.toString()">
-				and title like concat('%', #{keyfield}, '%')
+				and title like '%'||#{keyfield}||'%'
 			</if>
 			<if test="keyword=='c'.toString()">
-				and content like concat('%', #{keyfield}, '%')
+				and content like '%'||#{keyfield}||'%'
 			</if>
 			<if test="keyword=='w'.toString()">
-				and writer like concat('%', #{keyfield}, '%')			
+				and writer like '%'||#{keyfield}'%'			
 			</if>
 			<if test="keyword=='tc'.toString()">
-				and title like concat('%', #{keyfield}, '%') or content like concat('%', #{keyfield}, '%')		
+				and title like '%'||#{keyfield}||'%' or content like '%'||#{keyfield}||'%'	
 			</if>
 		</if>
 	</sql>
 	
-	<select id="list" resultType="com.raonis.board.domain.NoticeVO">
+	<select id="list" resultType="com.raonis.board.domain.NoticeVO">		
 		<![CDATA[
 			select * 
-			from tbl_board 
-			where bno>0 
+			FROM (SELECT ROWNUM RNUM, TBL_NOTICE.* FROM TBL_NOTICE order by num desc) A WHERE NUM>0
 		]]>
-		<include refid="search"></include>
+		<if test="search.keyfield!=null or search.keyfield!=''">
+			<if test="search.keyword=='t'.toString()">
+				and title like '%'||#{search.keyfield}||'%'
+			</if>
+			<if test="search.keyword=='c'.toString()">
+				and content like '%'||#{search.keyfield}||'%'
+			</if>
+			<if test="search.keyword=='w'.toString()">
+				and writer like '%'||#{search.keyfield}||'%'			
+			</if>
+			<if test="search.keyword=='tc'.toString()">
+				and title like '%'||#{search.keyfield}||'%' or content like '%'||#{search.keyfield}||'%'	
+			</if>
+		</if>
 		<![CDATA[
-			order by num desc, regdate desc limit #{start}, #{recordPerPage}
+			AND A.RNUM BETWEEN #{start}+1 AND #{recordPerPage}
 		]]>
 	</select>
 	
@@ -66,7 +78,11 @@
 	</delete>
 	
 	<select id="count" resultType="int">
-		select count(*) from tbl_board where bno>0 <include refid="search"></include>
+	<![CDATA[
+		select count(*) 
+		from tbl_notice where num>0
+	]]>	
+	<include refid="search"></include>
 	</select>
 	
 </mapper>
