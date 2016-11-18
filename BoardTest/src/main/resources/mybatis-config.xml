@@ -6,6 +6,5 @@
 
 <configuration>
 	<typeAliases>
-		<package name="com.raonis.board.domain" />
 	</typeAliases>
 </configuration>

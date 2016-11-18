@@ -9,6 +9,14 @@
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#submit").click(function(){
+			$("#form").submit();
+		})
+	})
+</script>
 </head>
 <body>
 <br/><br/>
@@ -17,30 +25,32 @@
 	<div class="row">
 	<div class="col-md-2"></div>
 		<div class="col-md-8" align="center">
-			<form>
+			<form enctype="multipart/form-data" method="post" action="/notice/write" name="form" id="form">
 				<table class="table">
 					<tr>
 						<td>제목</td>
 					</tr>
 					<tr>
-						<td><input type="text" style="width:100%"></td>
+						<td><input type="text" style="width:100%" id="title" name="title"></td>
 					</tr>
 					<tr>
 						<td>내용</td>
 					</tr>
 					<tr>
-						<td><textarea rows="5" style="width:100%"></textarea></td>
+						<td><textarea rows="5" style="width:100%" id="content" name="content"></textarea></td>
 					</tr>
 					<tr>
 						<td>첨부파일</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="button" value="파일찾기"> 
+							<input type="file" id="filename" name="filename">
+							
+							<!--  <input type="button" value="파일찾기" id="search"> --> 
 						</td>
 					</tr>
 				</table>
-				<button>전송</button>&nbsp;<button>취소</button>
+				<button id="submit">전송</button>&nbsp;<button id="reset">취소</button>
 			</form>	
 		</div>
 	</div>

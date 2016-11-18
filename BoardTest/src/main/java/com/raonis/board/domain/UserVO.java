@@ -1,9 +1,9 @@
 package com.raonis.board.domain;
 
 public class UserVO {
-	String id;
-	String pw;
-	int auth;
+	private String id;
+	private String pw;
+	private int auth;
 	
 	public String getId() {
 		return id;

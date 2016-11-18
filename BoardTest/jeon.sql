@@ -19,12 +19,16 @@ create table tbl_notice
   title varchar2(50) not null,
   content varchar2(1000) not null,
   writer varchar2(30) not null,
-  filename varchar2(50),
+  filename varchar2(300),
   regdate date DEFAULT sysdate,
-  viewcnt number default 1
+  viewcnt number default 0
 );
 
 alter table tbl_notice add CONSTRAINT pk_notice primary key(num);
 
 insert into TBL_USER(num, id, pw, auth) values(seq_user.nextVal, 'jeon', '1111', '1');
+
+select * from tbl_user;
+select * from tbl_notice;
+
 commit;
