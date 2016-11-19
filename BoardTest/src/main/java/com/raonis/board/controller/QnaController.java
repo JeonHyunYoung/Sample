@@ -39,7 +39,7 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value="/qna/write", method = RequestMethod.GET)
-	public void write(HttpSession session){	}
+	public void write(){	}
 	
 	@RequestMapping(value="/qna/write", method = RequestMethod.POST)
 	public String dowrite(Model model, QnaVO vo, int select, HttpSession session){
