@@ -37,7 +37,7 @@
   		
 		<c:if test="${id!=null }">
 			<p><b>${id }</b>님 환영합니다.</p><br><br>
-			<a href="/notice/list">공지사항</a>&nbsp;&nbsp;&nbsp;<a href="#">Q & A</a>
+			<a href="/notice/list">공지사항</a>&nbsp;&nbsp;&nbsp;<a href="/qna/list">Q & A</a>
 		</c:if>
 		
   	</div>

@@ -20,19 +20,19 @@
 		<div class="col-md-8"align="center">
 				<table class="table">
 					<tr>
-						<td>자바를 마스터하자(과정번호 : 102)</td>
+						<td>${qna. }자바를 마스터하자(과정번호 : 102)</td>
 					</tr>
 					<tr>
 						<td>제목</td>
 					</tr>
 					<tr>
-						<td><input type="text" style="width:100%" value="입력된 게시글의 제목의 들어옵니다." readonly="readonly"></td>
+						<td><input type="text" style="width:100%" value="${qna.title }" readonly="readonly"></td>
 					</tr>
 					<tr>
 						<td>내용</td>
 					</tr>
 					<tr>
-						<td><textarea rows="5" style="width:100%" readonly="readonly">입력된 게시글의 내용이 들어옵니다.</textarea></td>
+						<td><textarea rows="5" style="width:100%" readonly="readonly">${qna.content }</textarea></td>
 					</tr>
 				</table>
 				

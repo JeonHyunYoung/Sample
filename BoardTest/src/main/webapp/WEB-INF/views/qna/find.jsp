@@ -9,26 +9,80 @@
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$(".btn-primary").click(function(){
+			alert($(this).attr("data-num"));
+			opener.$("#select").val($(this).attr("data-num"));
+			self.close();
+		})
+		
+		/*
+		$(".btn").click(function(){
+			alert("버튼");
+			opener.$("#option").val($(this).attr("data-num"));
+			self.close();
+		})
+
+		$("#search").click(function(){
+			
+			var option=$('#option').val();
+			var value=$('#value').val();
+			
+			$.ajax({
+				type:'POST',
+				url:'/qna/search',
+				headers:{"Content-Type":"application/json","X-HTTP-Method-Override":"POST"},
+				dataType:'text',
+				data:JSON.stringify({option:option, value:value}),
+				success:function(result){
+					
+					var json = $.parseJSON(result);
+					var str='';
+					for (var i in json) {
+						str+='<tr>'
+							+'<td>'+json[i].num+'</td>'
+							+'<td>'+json[i].title+'</td>'
+							+'<td><input type="button" class="btn btn-default" id="btn" data-num="'+json[i].num+'"value="선택">'
+							+'</tr>'
+					}
+					$('#tbody').html(str);
+
+				}
+			});
+		})
+		*/
+	})
+</script>
+
 </head>
 <body>
 
 <div class="row">
 	<div class="col-md-2"></div>
 		<div class="col-md-8" align="center">
-		<select>
-			<option>과정명</option>
-			<option>과정번호</option>	
-		</select>
-		<input type="text">
-		<button>검색</button>
-		
+		<form action="/qna/search" method="post">
+			<select id="option" name="option">
+				<option value="num" >과정번호</option>	
+				<option value="class" >과정명</option>
+			</select>
+			<input type="text" id="value" name="value">
+			<button id="search">검색</button>
+		</form>
 		<table class="table">
 			<tr>
-				<th>과정번호</th><th>과정명</th>
+				<th width="30%">과정번호</th><th width="60%">과정명</th><th width="10%"></th>
 			</tr>
-			<tr>
-				<td>101</td><td><a>자바를 마스터하자</a></td>
-			</tr>
+			<tbody id="tbody">
+				<c:forEach var="classVO" items="${list }">
+					<tr>
+						<td>${classVO.num }</td><td>${classVO.title }</td><td><input type="button" class="btn btn-primary" value="선택" data-num="${classVO.num }"></td>
+					</tr>
+				</c:forEach>
+			</tbody>				
+	
 		</table>
 	</div>
 </div>
