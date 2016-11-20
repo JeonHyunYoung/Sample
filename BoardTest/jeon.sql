@@ -40,7 +40,8 @@ insert into tbl_class values(100, '자바 마스터');
 insert into tbl_class values(200, 'JSP 마스터');
 insert into tbl_class values(300, '스프링 웹 프로젝트');
 
-create sequence seq_pos;
+create sequence seq_qna;
+create sequence seq_class start with 300 increment by 100;  
 
 create table tbl_class(
   num number not null,

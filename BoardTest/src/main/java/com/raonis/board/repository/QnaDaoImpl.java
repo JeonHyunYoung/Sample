@@ -23,6 +23,7 @@ public class QnaDaoImpl implements QnaDao{
 
 	@Override
 	public void answer(QnaVO vo) {
+		sqlSession.update(NAMESPACE+".pos", vo);
 		sqlSession.insert(NAMESPACE+".answer", vo);		
 	}
 	
@@ -35,11 +36,12 @@ public class QnaDaoImpl implements QnaDao{
 	@Override
 	public QnaVO read(int num) {
 		return sqlSession.selectOne(NAMESPACE+".read", num);
+		
 	}
 
 	@Override
 	public void addViewCount(int num) {
-		sqlSession.update(NAMESPACE+"addViewCount", num);
+		sqlSession.update(NAMESPACE+".addViewCount", num);
 	}
 
 	@Override

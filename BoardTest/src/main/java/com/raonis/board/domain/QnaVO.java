@@ -12,7 +12,14 @@ public class QnaVO {
 	private int viewcnt;
 	private int depth;
 	private int pos;
-	
+	private String ctitle;
+
+	public String getCtitle() {
+		return ctitle;
+	}
+	public void setCtitle(String ctitle) {
+		this.ctitle = ctitle;
+	}
 	public int getNum() {
 		return num;
 	}

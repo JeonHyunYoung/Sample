@@ -18,6 +18,7 @@ import com.raonis.board.service.NoticeService;
 import com.raonis.board.util.FileUpload;
 import com.raonis.board.util.Paging;
 import com.raonis.board.util.Search;
+import com.raonis.board.util.PreventXSS;
 
 /**
  * Handles requests for the application home page.
@@ -51,9 +52,9 @@ public class NoticeController {
 	@RequestMapping(value = "/notice/write", method = RequestMethod.POST)
 	public String dowrite(Model model, MultipartFile filename, String title, String content, HttpServletRequest req, HttpSession session) throws IOException {
 		NoticeVO vo = new NoticeVO();
-		
-		vo.setTitle(title);
-		vo.setContent(content);
+		//XSS¸¦ ¹æÁö
+		vo.setTitle(PreventXSS.filter(title));
+		vo.setContent(PreventXSS.filter(content));
 		vo.setWriter((String)session.getAttribute("id"));
 		String savedName=FileUpload.uploadFile(filename.getOriginalFilename(), filename.getBytes(), req.getServletContext().getRealPath("resources/upload"));
 		vo.setFilename(savedName);

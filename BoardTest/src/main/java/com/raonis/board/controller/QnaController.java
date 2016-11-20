@@ -35,6 +35,7 @@ public class QnaController {
 	
 	@RequestMapping(value = "/qna/list", method = RequestMethod.GET)
 	public void list(Model model) {
+		System.out.println(service.list().get(1).getDepth());
 		model.addAttribute("list", service.list());
 	}
 	
@@ -45,8 +46,7 @@ public class QnaController {
 	public String dowrite(Model model, QnaVO vo, int select, HttpSession session){
 		vo.setCnum(select);
 		vo.setWriter((String)session.getAttribute("id"));
-		service.write(vo, "question");
-		
+		service.qestion(vo);
 		return "redirect:/qna/list";
 	}
 	
@@ -59,7 +59,7 @@ public class QnaController {
 	public void find(Model model){
 		
 	}
-	/*
+	
 	@ResponseBody
 	@RequestMapping(value="/qna/search", method = RequestMethod.POST)
 	public ResponseEntity<List<ClassVO>> search(Model model, @RequestBody ClassSearch s){
@@ -73,16 +73,22 @@ public class QnaController {
 		
 		return entity;
 	}
-	*/
-	@RequestMapping(value="/qna/search", method = RequestMethod.POST)
-	public String search(Model model, ClassSearch s, RedirectAttributes ra){
-		ra.addFlashAttribute("list", dao.list(s));
-		return "redirect:/qna/find";
+	
+	@RequestMapping(value="/qna/answer", method = RequestMethod.GET)
+	public void answer(Model model, QnaVO vo){
+		model.addAttribute("qna", vo);
 	}
 	
-	
-	
-	
-
+	@RequestMapping(value="/qna/answer", method = RequestMethod.POST)
+	public String doanswer(Model model, QnaVO vo, HttpSession session){
+		System.out.println(service.read(vo.getNum(), "other").getPos());
+		vo.setPos(service.read(vo.getNum(), "other").getPos());
+		vo.setDepth(service.read(vo.getNum(), "other").getDepth()+1);
+		vo.setWriter((String)session.getAttribute("id"));
+		
+		service.answer(vo);
+		
+		return "redirect:/qna/list";
+	}
 
 }

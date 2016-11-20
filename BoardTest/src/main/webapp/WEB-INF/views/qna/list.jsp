@@ -24,7 +24,7 @@
 				<c:forEach items="${list }" var="qna">
 					<tr>
 						<td>${qna.num }</td>
-						<td><a href="/qna/read?num=${qna.num }">${qna.title }</a></td>
+						<td><a href="/qna/read?num=${qna.num }"><c:forEach begin="1" end="${qna.depth }">&nbsp;&nbsp;</c:forEach>${qna.title }</a></td>
 						<td>${qna.writer }</td>
 						<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${qna.regdate }"/></td>
 						<td>${qna.viewcnt }</td>

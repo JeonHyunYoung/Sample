@@ -9,7 +9,30 @@
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#answerBtn").click(function(){
+			var $form = $("<form></form>");
+			
+			$form.attr("action", "/qna/answer");
+			$form.attr("method", "get");
+		    $form.appendTo('body');
+			
+		    var num = $('<input name="num" type="hidden" value="'+${qna.num }+'">');
+		    var ctitle = $('<input name="ctitle" type="hidden" value="'+'${qna.ctitle }'+'">');
+		    var cnum = $('<input name="cnum" type="hidden" value="'+${qna.cnum }+'">');
+		    var title = $('<input name="title" type="hidden" value="'+'${qna.title }'+'">');
+			
+			$form.append(num);
+			$form.append(cnum);
+			$form.append(ctitle);
+			$form.append(title);
 
+			$form.submit();
+		})
+	})
+</script>
 </head>
 <body>
 <br/><br/>
@@ -20,7 +43,7 @@
 		<div class="col-md-8"align="center">
 				<table class="table">
 					<tr>
-						<td>${qna. }자바를 마스터하자(과정번호 : 102)</td>
+						<td>${qna.ctitle }(과정번호 : ${qna.cnum })</td>
 					</tr>
 					<tr>
 						<td>제목</td>
@@ -36,10 +59,10 @@
 					</tr>
 				</table>
 				
-				<button class="btn">목록</button>
-				&nbsp;&nbsp;<button class="btn">수정</button>
-				&nbsp;&nbsp;<button class="btn">삭제</button>
-				&nbsp;&nbsp;<button>답글쓰기</button>
+				<a href="/qna/list" role="button" class="btn btn-default">목록</a>
+				&nbsp;&nbsp;<button class="btn btn-default">수정</button>
+				&nbsp;&nbsp;<button class="btn btn-default">삭제</button>
+				&nbsp;&nbsp;<button class="btn btn-default" id="answerBtn">답글쓰기</button>
 
 		</div>
 	</div>

@@ -16,7 +16,7 @@
 
 			var $form = $('<form></form>');
 			$form.attr("action", "/notice/delete");
-			$form.attr("method", "post");
+			$form.attr("method", "GET");
 		    $form.appendTo('body');
 		     
 		    var num = $('<input name="num" type="hidden" value="'+${notice.num}+'">');

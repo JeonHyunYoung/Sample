@@ -15,20 +15,24 @@
 	
 	<insert id="answer">
 		insert into tbl_qna(num, title, content, writer, cnum, pos, depth) 
-		values(seq_qna.nextVal, #{title}, #{content}, #{writer}, #{cnum}, seq_qna.nextVal, #{depth})
+		values(seq_qna.nextVal, #{title}, #{content}, #{writer}, #{cnum}, #{pos}, #{depth})
 	</insert>
 	
 	<update id="pos">
-		update tbl_qna set pos=pos+1 where pos>#{pos}
+		update tbl_qna set pos=pos+1 where pos>=#{pos}
 	</update>
 	
 	<select id="read" resultType="com.raonis.board.domain.QnaVO">
-		select * from tbl_qna 
-		where num=#{num};
+		select q.*, c.ctitle from tbl_qna q, tbl_class c
+		where q.cnum=c.cnum and q.num=#{num}
 	</select>
 	
 	<delete id="delete">
-		delete from tbl_qna where num=${num}
+		delete from tbl_qna where num=#{num}
 	</delete>
+	
+	<update id="addViewCount">
+		update tbl_qna set viewcnt=viewcnt+1 where num=#{num}
+	</update>
 	
 </mapper>

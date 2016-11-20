@@ -13,38 +13,37 @@ public class QnaServiceImpl implements QnaService{
 
 	@Autowired
 	private QnaDao dao;
-	
-	@Override
-	public void write(QnaVO vo, String use) {
-		if(use.equals("question")){
-			dao.question(vo);
-		}
-		else {
-			dao.answer(vo);
-		}
-	}
 
 	@Override
 	public void update(QnaVO vo) {
-		// TODO Auto-generated method stub
-		
+		dao.update(vo);
 	}
 
 	@Override
 	public QnaVO read(int num, String use) {
-		// TODO Auto-generated method stub
-		return null;
+		if(use.equals("read")){
+			dao.addViewCount(num);
+		}
+		return dao.read(num);
 	}
 
 	@Override
 	public void delete(int num) {
-		// TODO Auto-generated method stub
-		
+		dao.delete(num);
 	}
-
 	@Override
 	public List<QnaVO> list() {
 		return dao.list();
+	}
+
+	@Override
+	public void qestion(QnaVO vo) {
+		dao.question(vo);
+	}
+
+	@Override
+	public void answer(QnaVO vo) {
+		dao.answer(vo);
 	}
 	
 	
