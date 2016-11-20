@@ -1,6 +1,8 @@
 create sequence seq_user;
 create sequence seq_notice;
 
+select * from tbl_notice;
+
 create table tbl_user
 (
   num number not null,
@@ -33,22 +35,16 @@ insert into tbl_class values(100, '자바 마스터');
 insert into tbl_class values(200, 'JSP 마스터');
 insert into tbl_class values(300, '스프링 웹 프로젝트');
 
-select * from tbl_qna;
-select * from TBL_CLASS;
-
-insert into tbl_class values(100, '자바 마스터');
-insert into tbl_class values(200, 'JSP 마스터');
-insert into tbl_class values(300, '스프링 웹 프로젝트');
-
 create sequence seq_qna;
 create sequence seq_class start with 300 increment by 100;  
 
 create table tbl_class(
-  num number not null,
-  title VARCHAR2(100)
+  cnum number not null,
+  ctitle VARCHAR2(100)
 );
 
-alter table tbl_class add constraint pk_class primary key(num);
+alter table tbl_class add constraint pk_class primary key(cnum);
+
 create table tbl_qna
 (
 num number not null,
@@ -63,10 +59,14 @@ pos number
 );
 
 alter table tbl_qna add constraint pk_qna primary key(num);
-alter table tbl_qna add constraint fk_qna foreign key(cnum) references tbl_class(num) on delete cascade;
+alter table tbl_qna add constraint fk_qna foreign key(cnum) references tbl_class(cnum) on delete cascade;
 
 insert into tbl_qna(num, title, content, writer, cnum, pos) values(seq_qna.nextVal, '자바 마스터 강의 질문합니다', 'test', 'jeon', 100, seq_qna.nextVal);
 insert into tbl_qna(num, title, content, writer, cnum, pos) values(seq_qna.nextVal, 'JSP 질문이요', 'test', 'young', 200, seq_qna.nextVal);
 insert into tbl_qna(num, title, content, writer, cnum, pos) values(seq_qna.nextVal, '스프링 어렵네요. 질문합니다.', 'test', 'hyun', 300, seq_qna.nextVal);
 select * from tbl_qna;
 commit;
+select * from tbl_qna order by pos desc;
+
+
+
