@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.raonis.board.domain.ClassVO;
 import com.raonis.board.domain.QnaVO;
 import com.raonis.board.service.ClassDao;
 import com.raonis.board.service.QnaService;
 import com.raonis.board.util.ClassSearch;
+import com.raonis.board.util.DeleteFile;
 
 @Controller
 public class QnaController {
@@ -35,12 +35,13 @@ public class QnaController {
 	
 	@RequestMapping(value = "/qna/list", method = RequestMethod.GET)
 	public void list(Model model) {
-		System.out.println(service.list().get(1).getDepth());
 		model.addAttribute("list", service.list());
 	}
 	
 	@RequestMapping(value="/qna/write", method = RequestMethod.GET)
-	public void write(){	}
+	public void write(Model model){
+		model.addAttribute("c",dao.listAll());
+	}
 	
 	@RequestMapping(value="/qna/write", method = RequestMethod.POST)
 	public String dowrite(Model model, QnaVO vo, int select, HttpSession session){
@@ -90,5 +91,7 @@ public class QnaController {
 		
 		return "redirect:/qna/list";
 	}
+	
+	
 
 }

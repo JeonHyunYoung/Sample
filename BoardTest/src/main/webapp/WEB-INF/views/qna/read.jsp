@@ -11,7 +11,62 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script>
+getAllList();
+var max=3;
+var totalreply;
+function getAllList(){
+	var str="";
+	var num='${qna.num }';
+	$.getJSON("/reply/all/"+num, function(data){
+		totalreply=data.length;
+		if(totalreply<=max){$('#more').hide();}
+		else if(totalreply>max){$('#more').show();}
+		$(data).each(function(i){
+			if(i<max){
+				str+="<div style='border: 1px solid black'>"
+					+"<p>작성자 : "+this.replyer+"</p><br/>"
+					+"<textarea style='width:100%' readonly='readonly'>"+this.replytext+"</textarea>"
+					+"</div>";
+			}
+		});
+
+		$('#replies').html(str);
+	})
+}
+
+
 	$(document).ready(function(){
+	
+		$('#more').click(function(){
+			max+=2;
+			if(max>=totalreply){
+				$('#more').hide();
+			}
+			getAllList();
+		});
+		
+		
+		$('#insertReply').click(function(){
+			var replyer = '${id}';
+			var replytext = $('#replytext').val();
+			var num = '${qna.num }';
+			
+			$.ajax({
+				type:'post',
+				url:'/reply/write',
+				headers:{"Content-Type":"application/json","X-HTTP-Method-Override":"POST"},
+				dataType:'text',
+				data:JSON.stringify({num:num, replyer:replyer, replytext:replytext}),
+				success:function(result){
+					if(result=='SUCCESS'){
+						alert("등록되었습니다.");
+						getAllList();
+						$('#replytext').val('');
+					}
+				}
+			});
+		});
+		
 		$("#answerBtn").click(function(){
 			var $form = $("<form></form>");
 			
@@ -31,6 +86,7 @@
 
 			$form.submit();
 		})
+		
 	})
 </script>
 </head>
@@ -63,7 +119,20 @@
 				&nbsp;&nbsp;<button class="btn btn-default">수정</button>
 				&nbsp;&nbsp;<button class="btn btn-default">삭제</button>
 				&nbsp;&nbsp;<button class="btn btn-default" id="answerBtn">답글쓰기</button>
-
+				
+				<br/><br/>
+				<div id="addReplyDiv">
+					<p>댓글 입력</p><br/>
+					<textarea id="replytext" name="replytext" rows="1" style="width:100%" ></textarea>
+					<button id="insertReply">댓글등록</button>
+				</div>
+				<br/><br/>
+				<div id="replies">
+					
+				</div>
+				<div id="replymore">
+					<button id="more">더보기(2개씩)</button>
+				</div>
 		</div>
 	</div>
 </div>

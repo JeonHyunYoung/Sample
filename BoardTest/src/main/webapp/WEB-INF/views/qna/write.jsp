@@ -39,9 +39,10 @@
 						<td>
 							<select id="select" name="select">
 								<option>-------------------------</option>
-								<option value="100">쉽게 배우는 영어 문법(과정번호:100)</option>
-								<option value="200">자바를 마스터하자(과정번호:200)</option>
-								<option value="300">HTML5&CSS3(과정번호:300)</option>
+								<c:forEach items="${c }" var="cl">
+									<option value="${cl.cnum }">${cl.ctitle }(과정번호:${cl.cnum })</option>
+								</c:forEach>
+
 							</select>
 							<input type="button" id="find" name="find" value="찾기">
 						</td>

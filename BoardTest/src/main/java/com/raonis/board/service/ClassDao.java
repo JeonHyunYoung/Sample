@@ -19,4 +19,8 @@ public class ClassDao {
 	public List<ClassVO> list(ClassSearch s){
 		return sqlSession.selectList(NAMESPACE+".list", s);
 	}
+	
+	public List<ClassVO> listAll(){
+		return sqlSession.selectList(NAMESPACE+".listAll");
+	}
 }

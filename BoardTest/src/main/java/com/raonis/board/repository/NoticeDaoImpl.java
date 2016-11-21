@@ -30,12 +30,7 @@ public class NoticeDaoImpl implements NoticeDao{
 
 	@Override
 	public void update(NoticeVO vo) {
-		if(vo.getFilename()==null){
-			sqlSession.update(NAMESPACE+".update", vo);
-		}
-		else{
-			sqlSession.update(NAMESPACE+".update1", vo);
-		}
+		sqlSession.update(NAMESPACE+".update", vo);
 	}
 
 	@Override
@@ -67,6 +62,11 @@ public class NoticeDaoImpl implements NoticeDao{
 		map.put("search", search);
 		
 		return sqlSession.selectList(NAMESPACE+".list", map);
+	}
+
+	@Override
+	public void fileDel(int num) {
+		sqlSession.update(NAMESPACE+".fileDel", num);
 	}
 	
 }

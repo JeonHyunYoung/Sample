@@ -47,8 +47,14 @@
 	
 	<insert id="write">
 		insert into 
-		tbl_notice(num, title, content, writer, filename)
-		values(seq_notice.nextVal, #{title}, #{content}, #{writer}, #{filename})
+		<if test="filename!=''">
+			tbl_notice(num, title, content, writer, filename)
+			values(seq_notice.nextVal, #{title}, #{content}, #{writer}, #{filename})
+		</if>
+		<if test="filename==''">
+			tbl_notice(num, title, content, writer)
+			values(seq_notice.nextVal, #{title}, #{content}, #{writer})
+		</if>
 	</insert>
 	
 	<update id="update">
@@ -57,15 +63,9 @@
 		where num=#{num}
 	</update>
 	
-	<update id="update1">
-		update tbl_notice 
-		set title=#{title}, content=#{content}, writer=#{writer}
-		where num=#{num}
-	</update>
-	
 	<update id="addViewCount">
 		update tbl_notice
-		set viewcnt=#{viewcnt}
+		set viewcnt=viewcnt+1
 		where num=#{num}
 	</update>
 	
@@ -84,5 +84,9 @@
 	]]>	
 	<include refid="search"></include>
 	</select>
+	
+	<update id="fileDel">
+		update tbl_notice set filename=null where num=#{num}
+	</update>
 	
 </mapper>

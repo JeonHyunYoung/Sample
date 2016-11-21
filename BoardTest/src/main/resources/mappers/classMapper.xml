@@ -6,13 +6,17 @@
 	<select id="list" resultType="com.raonis.board.domain.ClassVO">
 		select * from tbl_class 
 		<if test="value!='' or value!=null">
-			<if test="option=='num'">
-				where num=#{value}
+			<if test="option=='cnum'">
+				where cnum=#{value}
 			</if>
 			<if test="option=='class'">
 				where title like '%'||#{value}||'%'
 			</if>
 		</if>
-		order by num desc
+		order by cnum desc
+	</select>
+	
+	<select id="listAll" resultType="com.raonis.board.domain.ClassVO">
+		select * from tbl_class order by cnum
 	</select>
 </mapper>

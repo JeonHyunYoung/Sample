@@ -7,15 +7,20 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.raonis.board.domain.NoticeVO;
 import com.raonis.board.service.NoticeService;
+import com.raonis.board.util.DeleteFile;
 import com.raonis.board.util.FileUpload;
+import com.raonis.board.util.FilenameExtractor;
 import com.raonis.board.util.Paging;
 import com.raonis.board.util.Search;
 import com.raonis.board.util.PreventXSS;
@@ -27,7 +32,6 @@ import com.raonis.board.util.PreventXSS;
 public class NoticeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
-	
 	
 	@Autowired
 	NoticeService service;
@@ -56,8 +60,13 @@ public class NoticeController {
 		vo.setTitle(PreventXSS.filter(title));
 		vo.setContent(PreventXSS.filter(content));
 		vo.setWriter((String)session.getAttribute("id"));
-		String savedName=FileUpload.uploadFile(filename.getOriginalFilename(), filename.getBytes(), req.getServletContext().getRealPath("resources/upload"));
-		vo.setFilename(savedName);
+		if(!filename.getOriginalFilename().equals("")){
+			String savedName=FileUpload.uploadFile(filename.getOriginalFilename(), filename.getBytes(), req.getServletContext().getRealPath("resources/upload"));
+			logger.info(savedName);
+			vo.setFilename(savedName);
+		} else{
+			vo.setFilename(filename.getOriginalFilename());
+		}
 
 		service.write(vo);
 		
@@ -69,7 +78,7 @@ public class NoticeController {
 		NoticeVO vo = service.read(num, "read");
 		//DB경로에서 가져온 값은 경로와 UUID 고유값이 포함되어 있으므로 파일 이름만 가져오기 위한 부분
 		if(vo.getFilename()!=null){
-			vo.setFilename(vo.getFilename().substring(vo.getFilename().lastIndexOf("_")+1));
+			vo.setFilename(FilenameExtractor.getName(vo.getFilename()));
 		}
 		model.addAttribute("notice", vo);
 	}
@@ -85,20 +94,26 @@ public class NoticeController {
 	@RequestMapping(value = "/notice/update", method = RequestMethod.GET)
 	public void update(Model model, int num){
 		NoticeVO vo = service.read(num, "update");
-		vo.setFilename(vo.getFilename().substring(vo.getFilename().lastIndexOf("_")+1));
+		if(vo.getFilename()!=null){
+			vo.setFilename(FilenameExtractor.getName(vo.getFilename()));
+		}
 		model.addAttribute("notice", vo);
 		model.addAttribute("num", vo.getNum());
 	}
 	
 	@RequestMapping(value = "/notice/update", method = RequestMethod.POST)
 	public String doupdate(Model model, String title, String content, 
-			MultipartFile filename, int num, HttpSession session, RedirectAttributes ra){
+			MultipartFile filename, int num, HttpSession session, RedirectAttributes ra, HttpServletRequest req) throws IOException{
 		NoticeVO vo = new NoticeVO();
 		vo.setTitle(title);
 		vo.setNum(num);
 		vo.setContent(content);
 		vo.setWriter((String)session.getAttribute("id"));
-		if(filename!=null){
+		if(!filename.getOriginalFilename().equals("")){
+			String savedName=FileUpload.uploadFile(filename.getOriginalFilename(), filename.getBytes(), req.getServletContext().getRealPath("resources/upload"));
+			logger.info(savedName);
+			vo.setFilename(savedName);
+		} else{
 			vo.setFilename(filename.getOriginalFilename());
 		}
 		
@@ -106,6 +121,25 @@ public class NoticeController {
 		ra.addFlashAttribute("msg", "수정 완료");
 		
 		return "redirect:/notice/read?num="+num;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/notice/filedel", method = RequestMethod.POST)
+	public ResponseEntity<String> filedel(Model model, int num, HttpServletRequest req){
+		ResponseEntity<String> entity=null;
+		
+		try{
+			String filepath = req.getServletContext().getRealPath("resources/upload")+"/"+service.read(num, "other").getFilename();
+			logger.info(filepath);
+			DeleteFile.deleteFile(filepath);
+			service.fileDel(num);
+			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
 	}
 
 }

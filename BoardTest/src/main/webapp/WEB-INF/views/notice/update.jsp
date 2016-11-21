@@ -12,7 +12,39 @@
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 <script>
-
+	function delFunc(){
+		var param='num='+${notice.num };
+		$.ajax({
+			type:'POST',
+			url:'/notice/filedel',
+			data:param,			
+			success:function(result){
+				if(result=='SUCCESS'){
+					//alert("파일이 삭제되었습니다");
+				}
+			}
+		});
+	}
+	$(document).ready(function(){
+		$("#x").click(function(){
+			$("#filename").val("");
+			$("#file").text("");
+			$("#x").attr("class", "");
+			
+			delFunc();
+		})
+		
+		$("#search").click(function(){
+			$("#filename").click();
+		})
+		$("#filename").change(function(){
+			delFunc();
+			var fullname = $("#filename").val();
+			var cutname = fullname.substring(fullname.lastIndexOf("\\")+1, fullname.length);
+			$("#file").text(cutname);
+			$("#x").attr("class", "glyphicon glyphicon-remove");
+		})
+	})
 </script>
 
 </head>
@@ -44,8 +76,9 @@
 					</tr>
 					<tr>
 						<td>
-							<a href="#">${notice.filename }</a>
-							<input type="file" id="filename" name="filename" style="opacity: 0">
+							<a href="#" id="file">${notice.filename }</a><span id="x" class="<c:if test="${notice.filename!=null }">glyphicon glyphicon-remove</c:if>" aria-hidden="true"></span>
+							&nbsp;<input type="button" id="search" value="찾기">
+							<input type="file" id="filename" name="filename" style="display: none">
 						</td>
 					</tr>
 				</table>

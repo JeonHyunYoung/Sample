@@ -12,4 +12,5 @@ public interface NoticeService {
 	public NoticeVO read(int num, String use);
 	public void delete(int num);
 	public List<NoticeVO> list(int start, int recordPerPage, Search search);
+	public void fileDel(int num);
 }

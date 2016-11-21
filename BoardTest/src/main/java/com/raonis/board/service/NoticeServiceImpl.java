@@ -48,5 +48,10 @@ public class NoticeServiceImpl implements NoticeService{
 	public List<NoticeVO> list(int start, int recordPerPage, Search search) {
 		return dao.list(start, recordPerPage, search);
 	}
+
+	@Override
+	public void fileDel(int num) {
+		dao.fileDel(num);
+	}
 	
 }

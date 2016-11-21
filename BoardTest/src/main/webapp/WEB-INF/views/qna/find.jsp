@@ -29,9 +29,9 @@
 				var str='';
 				for (var i in json) {
 					str+='<tr>'
-						+'<td>'+json[i].num+'</td>'
-						+'<td>'+json[i].title+'</td>'
-						+'<td><input type="button" class="btn btn-default" id="btn" value="선택" data-num="'+json[i].num+'">'
+						+'<td>'+json[i].cnum+'</td>'
+						+'<td>'+json[i].ctitle+'</td>'
+						+'<td><input type="button" class="btn btn-default" id="btn" value="선택" data-num="'+json[i].cnum+'">'
 						+'</tr>'
 				}
 				$('#tbody').html(str);
@@ -64,7 +64,7 @@
 		<div class="col-md-8" align="center">
 		<!-- form action="/qna/search" method="post"> -->
 			<select id="option" name="option">
-				<option value="num" >과정번호</option>	
+				<option value="cnum" >과정번호</option>	
 				<option value="class" >과정명</option>
 			</select>
 			<input type="text" id="value" name="value">
@@ -76,13 +76,7 @@
 			</tr>
 			
 			<tbody id="tbody">
-				<!-- 
-				<c:forEach var="classVO" items="${list }">
-					<tr>
-						<td>${classVO.num }</td><td>${classVO.title }</td><td><input type="button" class="btn btn-primary" value="선택" data-num="${classVO.num }"></td>
-					</tr>
-				</c:forEach>
-				 -->
+
 			</tbody>				
 	
 		</table>

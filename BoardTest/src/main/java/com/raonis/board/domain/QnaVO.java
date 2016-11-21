@@ -13,7 +13,14 @@ public class QnaVO {
 	private int depth;
 	private int pos;
 	private String ctitle;
+	private int replycnt;
 
+	public int getReplycnt() {
+		return replycnt;
+	}
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
 	public String getCtitle() {
 		return ctitle;
 	}

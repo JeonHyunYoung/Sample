@@ -55,7 +55,9 @@ cnum number not null,
 regdate date default sysdate,
 viewcnt number default 0,
 depth number default 0,
-pos number
+pos number,
+replycnt number default 0
+
 );
 
 alter table tbl_qna add constraint pk_qna primary key(num);
@@ -68,5 +70,20 @@ select * from tbl_qna;
 commit;
 select * from tbl_qna order by pos desc;
 
+create sequence seq_reply;
+
+drop table tbl_reply;
+
+create table tbl_reply
+(
+	rno number not null,
+	num number not null,
+	replytext varchar2(1000) not null,
+	replyer varchar2(100) not null,
+  updatedate date default sysdate
+);
+
+alter table tbl_reply add constraint pk_rno primary key(rno);
+alter table tbl_reply add constraint fk_reply foreign key(num) references tbl_qna(num) on delete cascade;
 
 

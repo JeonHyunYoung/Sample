@@ -1,20 +1,21 @@
 package com.raonis.board.domain;
 
 public class ClassVO {
-	private int num;
-	private String title;
 	
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	private int cnum;
+	private String ctitle;
 	
+	public String getCtitle() {
+		return ctitle;
+	}
+	public void setCtitle(String ctitle) {
+		this.ctitle = ctitle;
+	}
+	public int getCnum() {
+		return cnum;
+	}
+	public void setCnum(int cnum) {
+		this.cnum = cnum;
+	}
+
 }
