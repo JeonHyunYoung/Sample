@@ -82,7 +82,8 @@ public class QnaController {
 	
 	@RequestMapping(value="/qna/answer", method = RequestMethod.POST)
 	public String doanswer(Model model, QnaVO vo, HttpSession session){
-		System.out.println(service.read(vo.getNum(), "other").getPos());
+		
+		//답글을 등록 시에 DB값 입력 방식
 		vo.setPos(service.read(vo.getNum(), "other").getPos());
 		vo.setDepth(service.read(vo.getNum(), "other").getDepth()+1);
 		vo.setWriter((String)session.getAttribute("id"));

@@ -12,6 +12,7 @@
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script>
+	//검색 값을 사용해 입력된 강의를 불러오고 테이블에 출력
 	function getList(){
 		
 		var option=$('#option').val();
@@ -41,18 +42,18 @@
 	}
 	
 	$(document).ready(function(){
-		
+		//테이블에서 해당 레코드에 달린 버튼을 클릭시에 이 페이지를 오픈한 페이지로 값을 전달 후 이 페이지를 닫음
 		$("#tbody").on("click", "#btn", function(){
 			opener.$("#select").val($(this).attr("data-num"));
 			self.close();
 		})
 			
-
+		//검색했을 시 검색 조건에 맞는 레코드 출력
 		$("#search").click(function(){
 			getList();
 		})
 	})
-	
+	//페이지가 켜졌을 때 모든 레코드가 출력되도록 함
 	window.onload(getList());
 </script>
 

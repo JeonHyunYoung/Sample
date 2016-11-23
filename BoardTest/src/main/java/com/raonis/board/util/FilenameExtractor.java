@@ -1,3 +1,7 @@
+/*
+ * 경로가 포함된 이름을 자르는 작업을 수행하는 클래스 
+ */
+
 package com.raonis.board.util;
 
 public class FilenameExtractor {

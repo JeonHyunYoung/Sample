@@ -38,6 +38,7 @@ public class NoticeController {
 
 	@RequestMapping(value = "/notice/list", method = RequestMethod.GET)
 	public void list(Model model, Paging paging, Search search) {
+		//페이징을 하기위한 값들을 설정해주는 부분
 		int nowPage = paging.getNowPage();
 		int nowBlock = paging.getNowBlock();
 		paging = new Paging(service.count(search), nowBlock);
@@ -56,14 +57,16 @@ public class NoticeController {
 	@RequestMapping(value = "/notice/write", method = RequestMethod.POST)
 	public String dowrite(Model model, MultipartFile filename, String title, String content, HttpServletRequest req, HttpSession session) throws IOException {
 		NoticeVO vo = new NoticeVO();
-		//XSS를 방지
+		//XSS를 방지하기위해 PreventXSS를 사용하여 값을 저장
 		vo.setTitle(PreventXSS.filter(title));
 		vo.setContent(PreventXSS.filter(content));
 		vo.setWriter((String)session.getAttribute("id"));
+		
+		//파일이 들어왔을 때와 안들어 왔을 때를 구분해주는 조건절
 		if(!filename.getOriginalFilename().equals("")){
 			String savedName=FileUpload.uploadFile(filename.getOriginalFilename(), filename.getBytes(), req.getServletContext().getRealPath("resources/upload"));
 			logger.info(savedName);
-			vo.setFilename(savedName);
+			vo.setFilename(savedName);//DB에는 날짜가 포함된 경로를 저장
 		} else{
 			vo.setFilename(filename.getOriginalFilename());
 		}
@@ -75,6 +78,8 @@ public class NoticeController {
 	
 	@RequestMapping(value = "/notice/read", method = RequestMethod.GET)
 	public void read(Model model, int num){
+		//read는 업데이트 등에서도 사용하므로 변수를 하나 더 줌으로써 용도를 지정
+		//(읽기 수행시에는 조회수가 올라가야하고 나머지는 그렇지않으므로 구분)
 		NoticeVO vo = service.read(num, "read");
 		//DB경로에서 가져온 값은 경로와 UUID 고유값이 포함되어 있으므로 파일 이름만 가져오기 위한 부분
 		if(vo.getFilename()!=null){
@@ -109,6 +114,8 @@ public class NoticeController {
 		vo.setNum(num);
 		vo.setContent(content);
 		vo.setWriter((String)session.getAttribute("id"));
+		
+		//MultipartFile의 값은 널이 넘어오지 않으므로 이름이 있을 시와 없을 시로 구분
 		if(!filename.getOriginalFilename().equals("")){
 			String savedName=FileUpload.uploadFile(filename.getOriginalFilename(), filename.getBytes(), req.getServletContext().getRealPath("resources/upload"));
 			logger.info(savedName);
@@ -129,6 +136,7 @@ public class NoticeController {
 		ResponseEntity<String> entity=null;
 		
 		try{
+			//삭제를 수행하기 위해 업로드된 경로에 DB에 저장되어 있는 파일 이름(날짜경로가 포함되어 있는 이름)을 붙여서 DeleteFile을 호출
 			String filepath = req.getServletContext().getRealPath("resources/upload")+"/"+service.read(num, "other").getFilename();
 			logger.info(filepath);
 			DeleteFile.deleteFile(filepath);

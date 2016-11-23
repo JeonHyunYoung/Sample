@@ -12,15 +12,21 @@
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script>
 getAllList();
-var max=3;
-var totalreply;
+
+var max=3;//댓글이 출력될 수 있는 최대 갯수
+var totalreply;//해당 글에 입력되어 있는 댓글의 갯수
 function getAllList(){
 	var str="";
 	var num='${qna.num }';
 	$.getJSON("/reply/all/"+num, function(data){
+		
 		totalreply=data.length;
+		
+		//max의 갯수 이상의 댓글을 볼 수 있도록 하는 버튼의 생성 유무를 판단하는 조건문
 		if(totalreply<=max){$('#more').hide();}
 		else if(totalreply>max){$('#more').show();}
+		
+		//댓글을 출력해주는 부분
 		$(data).each(function(i){
 			if(i<max){
 				str+="<div style='border: 1px solid black'>"
@@ -36,7 +42,7 @@ function getAllList(){
 
 
 	$(document).ready(function(){
-	
+		//더보기 버튼 클릭 시에 2개씩 더 보이도록 하는 부분
 		$('#more').click(function(){
 			max+=2;
 			if(max>=totalreply){
@@ -45,7 +51,7 @@ function getAllList(){
 			getAllList();
 		});
 		
-		
+		//json방식으로 댓글 등록에 필요한 값을 전달
 		$('#insertReply').click(function(){
 			var replyer = '${id}';
 			var replytext = $('#replytext').val();
@@ -67,6 +73,7 @@ function getAllList(){
 			});
 		});
 		
+		//답변페이지로 가기 위한 함수
 		$("#answerBtn").click(function(){
 			var $form = $("<form></form>");
 			

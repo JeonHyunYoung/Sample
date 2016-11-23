@@ -1,3 +1,7 @@
+/*
+ * XSS를 막기 위해 게시글 입력시 HTML태그를 사용하지 못하게 하는 클래스 
+ */
+
 package com.raonis.board.util;
 
 public class PreventXSS {

@@ -1,3 +1,7 @@
+/*
+ * 강의를 검색할 때 사용할 변수값을 가진 클래스
+ */
+
 package com.raonis.board.util;
 
 public class ClassSearch {
