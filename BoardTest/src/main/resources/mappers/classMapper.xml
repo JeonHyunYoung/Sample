@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.classMapper">
+	<select id="list" resultType="com.raonis.board.domain.ClassVO">
+		select * from tbl_class 
+		<if test="value!='' or value!=null">
+			<if test="option=='cnum'">
+				where cnum=#{value}
+			</if>
+			<if test="option=='class'">
+				where title like '%'||#{value}||'%'
+			</if>
+		</if>
+		order by cnum desc
+	</select>
+	
+	<select id="listAll" resultType="com.raonis.board.domain.ClassVO">
+		select * from tbl_class order by cnum
+	</select>
+</mapper>

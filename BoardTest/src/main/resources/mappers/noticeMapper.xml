@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.noticeMapper">
+	
+	<sql id="search">
+		<if test="keyfield!=null or keyfield!=''">
+			<if test="keyword=='t'.toString()">
+				and title like '%'||#{keyfield}||'%'
+			</if>
+			<if test="keyword=='c'.toString()">
+				and content like '%'||#{keyfield}||'%'
+			</if>
+			<if test="keyword=='w'.toString()">
+				and writer like '%'||#{keyfield}'%'			
+			</if>
+			<if test="keyword=='tc'.toString()">
+				and title like '%'||#{keyfield}||'%' or content like '%'||#{keyfield}||'%'	
+			</if>
+		</if>
+	</sql>
+	
+	<select id="list" resultType="com.raonis.board.domain.NoticeVO">		
+		<![CDATA[
+			select * 
+			FROM (SELECT ROWNUM RNUM, TBL_NOTICE.* FROM TBL_NOTICE order by num desc) A WHERE NUM>0
+		]]>
+		<if test="search.keyfield!=null or search.keyfield!=''">
+			<if test="search.keyword=='t'.toString()">
+				and title like '%'||#{search.keyfield}||'%'
+			</if>
+			<if test="search.keyword=='c'.toString()">
+				and content like '%'||#{search.keyfield}||'%'
+			</if>
+			<if test="search.keyword=='w'.toString()">
+				and writer like '%'||#{search.keyfield}||'%'			
+			</if>
+			<if test="search.keyword=='tc'.toString()">
+				and title like '%'||#{search.keyfield}||'%' or content like '%'||#{search.keyfield}||'%'	
+			</if>
+		</if>
+		<![CDATA[
+			AND A.RNUM BETWEEN #{start}+1 AND #{recordPerPage}
+		]]>
+	</select>
+	
+	<insert id="write">
+		insert into 
+		<if test="filename!=''">
+			tbl_notice(num, title, content, writer, filename)
+			values(seq_notice.nextVal, #{title}, #{content}, #{writer}, #{filename})
+		</if>
+		<if test="filename==''">
+			tbl_notice(num, title, content, writer)
+			values(seq_notice.nextVal, #{title}, #{content}, #{writer})
+		</if>
+	</insert>
+	
+	<update id="update">
+		update tbl_notice 
+		set title=#{title}, content=#{content}, writer=#{writer}, filename=#{filename}
+		where num=#{num}
+	</update>
+	
+	<update id="addViewCount">
+		update tbl_notice
+		set viewcnt=viewcnt+1
+		where num=#{num}
+	</update>
+	
+	<select id="read" resultType="com.raonis.board.domain.NoticeVO">
+		select * from tbl_notice where num=#{num}
+	</select>
+	
+	<delete id="delete">
+		delete from tbl_notice where num=#{num}
+	</delete>
+	
+	<select id="count" resultType="int">
+	<![CDATA[
+		select count(*) 
+		from tbl_notice where num>0
+	]]>	
+	<include refid="search"></include>
+	</select>
+	
+	<update id="fileDel">
+		update tbl_notice set filename=null where num=#{num}
+	</update>
+	
+</mapper>

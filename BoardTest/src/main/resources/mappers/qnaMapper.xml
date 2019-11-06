@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.qnaMapper">
+	
+	<select id="list" resultType="com.raonis.board.domain.QnaVO">
+		select * from tbl_qna order by pos desc
+	</select>
+	
+	<insert id="question">
+		insert into tbl_qna(num, title, content, writer, cnum, pos) 
+		values(seq_qna.nextVal, #{title}, #{content}, #{writer}, #{cnum}, seq_qna.nextVal)
+	</insert>
+	
+	<insert id="answer">
+		insert into tbl_qna(num, title, content, writer, cnum, pos, depth) 
+		values(seq_qna.nextVal, #{title}, #{content}, #{writer}, #{cnum}, #{pos}, #{depth})
+	</insert>
+	
+	<update id="pos">
+		update tbl_qna set pos=pos+1 where pos>=#{pos}
+	</update>
+	
+	<select id="read" resultType="com.raonis.board.domain.QnaVO">
+		select q.*, c.ctitle from tbl_qna q, tbl_class c
+		where q.cnum=c.cnum and q.num=#{num}
+	</select>
+	
+	<delete id="delete">
+		delete from tbl_qna where num=#{num}
+	</delete>
+	
+	<update id="addViewCount">
+		update tbl_qna set viewcnt=viewcnt+1 where num=#{num}
+	</update>
+	
+</mapper>
